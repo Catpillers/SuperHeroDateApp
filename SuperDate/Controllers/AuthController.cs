@@ -13,9 +13,8 @@ using SuperDate.Models;
 namespace SuperDate.Controllers
 {
 
-    [Route("api/[controller]")]
+[Route("api/[controller]")]
     [ApiController]
-
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _repo;
@@ -23,28 +22,27 @@ namespace SuperDate.Controllers
 
         public AuthController(IAuthRepository repo, IConfiguration config)
         {
-            _config = config;
-
-            _repo = repo;
-
+            this._repo = repo;
+            this._config = config;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-
-            // validate request
-
+            //validate request
             userForRegisterDto.Name = userForRegisterDto.Name.ToLower();
-            if (await _repo.UserExists(userForRegisterDto.Name))
-                return BadRequest("Sorry user already exist");
 
+            if (await _repo.UserExists(userForRegisterDto.Name))
+                return BadRequest("Username already exists");
+            
             var userToCreate = new User
             {
-                Name = userForRegisterDto.Name,
+                Name = userForRegisterDto.Name
             };
+
             var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
-            return StatusCode(201);
+
+            return StatusCode(201); 
         }
 
         [HttpPost("login")]
@@ -53,34 +51,31 @@ namespace SuperDate.Controllers
             var userFromRepo = await _repo.Login(userForLoginDto.Name.ToLower(), userForLoginDto.Password);
             if (userFromRepo == null)
                 return Unauthorized();
-            
-            var claims = new[]
+
+            var claims = new []
             {
-              new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
-              new Claim(ClaimTypes.Name, userFromRepo.Name)
-          };
+                new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
+                new Claim(ClaimTypes.Name, userFromRepo.Name)
+            };
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-            
-            var tokenDescriptor = new SecurityTokenDescriptor{
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = creds
-                
+                SigningCredentials = creds,
             };
 
-            var tokenHendler = new JwtSecurityTokenHandler();
-
-            var token = tokenHendler.CreateToken(tokenDescriptor);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            
+            var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return Ok(new {
-                token = tokenHendler.WriteToken(token)
-            });
-
+                token = tokenHandler.WriteToken(token)
+            });           
         }
-
-
-
     }
 }
