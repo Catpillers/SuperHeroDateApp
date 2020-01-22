@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
     this.authServuce.login(this.model).subscribe(next => {
       console.log('Logged in successfully');
     }, error => {
-      console.log('Logging Faild!');
+      console.log(error);
     });
 }
 
