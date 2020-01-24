@@ -48,7 +48,6 @@ namespace SuperDate.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            throw new Exception("This is not the User You are looking for!");
             var userFromRepo = await _repo.Login(userForLoginDto.Name.ToLower(), userForLoginDto.Password);
             if (userFromRepo == null)
                 return Unauthorized();
