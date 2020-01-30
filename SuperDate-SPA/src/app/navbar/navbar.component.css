@@ -3,7 +3,12 @@
 }
 .dropdown-item{
     cursor: pointer;
+
 }
 .push{
     margin-right: auto;
+}
+
+.dropdown-toggle {
+    margin-right: 25px;
 }
