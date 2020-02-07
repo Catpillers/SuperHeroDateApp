@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -13,17 +14,19 @@ using SuperDate.Models;
 namespace SuperDate.Controllers
 {
 
-[Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
 
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
             this._repo = repo;
             this._config = config;
+            this._mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -34,7 +37,7 @@ namespace SuperDate.Controllers
 
             if (await _repo.UserExists(userForRegisterDto.Name))
                 return BadRequest("Username already exists");
-            
+
             var userToCreate = new User
             {
                 Name = userForRegisterDto.Name
@@ -42,7 +45,7 @@ namespace SuperDate.Controllers
 
             var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
 
-            return StatusCode(201); 
+            return StatusCode(201);
         }
 
         [HttpPost("login")]
@@ -52,7 +55,7 @@ namespace SuperDate.Controllers
             if (userFromRepo == null)
                 return Unauthorized();
 
-            var claims = new []
+            var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
                 new Claim(ClaimTypes.Name, userFromRepo.Name)
@@ -70,12 +73,17 @@ namespace SuperDate.Controllers
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok(new {
-                token = tokenHandler.WriteToken(token)
-            });           
+            var user = _mapper.Map<UserForListDto>(userFromRepo);
+
+            return Ok(new
+            {
+                token = tokenHandler.WriteToken(token),
+                user
+
+            });
         }
     }
 }

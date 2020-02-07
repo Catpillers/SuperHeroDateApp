@@ -24,6 +24,10 @@ namespace SuperDate.Helper
             CreateMap<Photo, PhotosForDetaildDto>();
             
             CreateMap<UserForUpdateDto, User>();
+
+            CreateMap<Photo, PhotoForReturnDto>();
+
+            CreateMap<PhotoForCreationDto, Photo>();
         }
     }
 }

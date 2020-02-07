@@ -12,3 +12,10 @@
 .dropdown-toggle {
     margin-right: 25px;
 }
+
+img{
+    max-height: 50px;
+    border: 2px solid white;
+    border-radius: 10px;
+    display: inline;
+}

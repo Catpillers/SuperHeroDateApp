@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SuperDate.Models;
@@ -39,6 +40,19 @@ namespace SuperDate.Data
         public async Task<bool> SaveAll()
         {
           return  await _context.SaveChangesAsync() > 0;
+        }
+    
+       
+       public async Task<Photo> GetPhoto (int id)
+       {
+           var photo = await _context.Photos.FirstOrDefaultAsync(p => p.Id == id);
+           return photo;
+       }
+
+        public async Task<Photo> GetMainPhoto(int userId)
+        {
+            return await _context.Photos.Where(u => u.UserID == userId)
+                                        .FirstOrDefaultAsync(p => p.IsMain);
         }
     }
 }
