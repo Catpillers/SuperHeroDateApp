@@ -12,22 +12,24 @@ namespace SuperDate.Helper
             CreateMap<User, UserForListDto>()
              .ForMember(d => d.PhotoUrl, opt =>
              opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url))
-             .ForMember(u => u.Age, opt => 
+             .ForMember(u => u.Age, opt =>
              opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
-            
+
             CreateMap<User, UserForDetaildDto>()
             .ForMember(d => d.PhotoUrl, opt =>
              opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url))
-             .ForMember(u => u.Age, opt => 
+             .ForMember(u => u.Age, opt =>
              opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
-            
+
             CreateMap<Photo, PhotosForDetaildDto>();
-            
+
             CreateMap<UserForUpdateDto, User>();
 
             CreateMap<Photo, PhotoForReturnDto>();
 
             CreateMap<PhotoForCreationDto, Photo>();
+
+            CreateMap<UserForRegisterDto, User>(); 
         }
     }
 }

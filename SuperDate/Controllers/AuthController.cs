@@ -38,14 +38,13 @@ namespace SuperDate.Controllers
             if (await _repo.UserExists(userForRegisterDto.Name))
                 return BadRequest("Username already exists");
 
-            var userToCreate = new User
-            {
-                Name = userForRegisterDto.Name
-            };
+            var userToCreate = _mapper.Map<User>(userForRegisterDto);
 
             var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
 
-            return StatusCode(201);
+            var userToReturn = _mapper.Map<UserForDetaildDto>(createdUser);
+
+            return CreatedAtRoute("GetUser", new {controller = "Users", id = createdUser.Id}, userToReturn);
         }
 
         [HttpPost("login")]
