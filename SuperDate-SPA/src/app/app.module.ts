@@ -15,7 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BsDropdownModule, TabsModule, BsDatepickerModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule } from 'ngx-bootstrap';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
@@ -32,6 +32,7 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import {TimeAgoPipe} from 'time-ago-pipe';
+import { ButtonsModule } from 'ngx-bootstrap';
 
 
 
@@ -81,7 +82,9 @@ export function tokenGetter() {
             blacklistedRoutes: ['localhost:5000/api/auth']
          }
       }),
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      PaginationModule.forRoot(),
+      ButtonsModule.forRoot()
    ],
    providers: [
       AuthService,
