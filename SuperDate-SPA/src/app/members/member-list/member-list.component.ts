@@ -52,7 +52,7 @@ export class MemberListComponent implements OnInit {
         this.pagination = users.pagination;
 
       }, error => {
-        this.alertify.error(error);
+        this.alertify.error(error.error);
       });
   }
 }

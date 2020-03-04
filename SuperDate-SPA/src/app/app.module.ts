@@ -33,6 +33,7 @@ import { PreventUnsavedChanges } from './guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { ButtonsModule } from 'ngx-bootstrap';
+import { ListsResolver } from './_resolvers/lists.resolver';
 
 
 
@@ -94,7 +95,8 @@ export function tokenGetter() {
       {
          provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig
       },
-      MemberEditResolver
+      MemberEditResolver,
+      ListsResolver
    ],
    bootstrap: [
       AppComponent

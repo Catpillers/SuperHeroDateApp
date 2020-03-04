@@ -9,6 +9,12 @@
 body {
   font-family: "Open Sans", sans-serif;
 }
+
+.alertify-notifier .ajs-message.ajs-warning {
+  background-color: rgb(213, 140, 223) !important;
+  color: white;
+}
+
 .tab-panel {
   border: 1px solid #ddd;
   padding: 10px;

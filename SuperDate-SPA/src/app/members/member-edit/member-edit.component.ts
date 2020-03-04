@@ -24,7 +24,7 @@ export class MemberEditComponent implements OnInit {
     }
   }
   constructor(private activated: ActivatedRoute, private alertify: AlertifyService,
-              private userService: UserService, private auth: AuthService) { }
+    private userService: UserService, private auth: AuthService) { }
 
   ngOnInit() {
     this.activated.data.subscribe(data => {
@@ -39,13 +39,13 @@ export class MemberEditComponent implements OnInit {
       this.alertify.success('Your Profile was updated successfuly!');
       this.editForm.reset(this.user);
     }, error => {
-      this.alertify.error(error);
+      this.alertify.error(error.error);
     });
 
   }
 
-  updateMainPhoto(url: string){
-     this.user.photoUrl = url;
+  updateMainPhoto(url: string) {
+    this.user.photoUrl = url;
   }
 
 }
