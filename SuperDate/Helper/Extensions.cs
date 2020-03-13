@@ -2,11 +2,13 @@ using System;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using SuperDate.Data;
 
 namespace SuperDate.Helper
 {
     static class Extensions
     {
+         
         public static void AddAppError(this HttpResponse response, string message)
         {
             response.Headers.Add("Application-Error", message);
@@ -34,6 +36,7 @@ namespace SuperDate.Helper
             response.Headers.Add("Pagination",
                 JsonConvert.SerializeObject(paginationHeader, camelCaseFormatter));
             response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
+           
 
         }
 

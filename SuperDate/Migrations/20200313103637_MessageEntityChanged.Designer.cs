@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuperDate.Data;
 
 namespace SuperDate.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200313103637_MessageEntityChanged")]
+    partial class MessageEntityChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +38,7 @@ namespace SuperDate.Migrations
 
                     b.Property<string>("Content");
 
-                    b.Property<DateTime?>("DateRead");
+                    b.Property<DateTime?>("DateRed");
 
                     b.Property<bool>("IsRead");
 

@@ -44,7 +44,7 @@ namespace SuperDate.Controllers
 
             var userToReturn = _mapper.Map<UserForDetaildDto>(createdUser);
 
-            return CreatedAtRoute("GetUser", new {controller = "Users", id = createdUser.Id}, userToReturn);
+            return CreatedAtRoute("GetUser", new { controller = "Users", id = createdUser.Id }, userToReturn);
         }
 
         [HttpPost("login")]
@@ -77,12 +77,7 @@ namespace SuperDate.Controllers
 
             var user = _mapper.Map<UserForListDto>(userFromRepo);
 
-            return Ok(new
-            {
-                token = tokenHandler.WriteToken(token),
-                user
-
-            });
+            return Ok(new { token = tokenHandler.WriteToken(token), user });
         }
     }
 }

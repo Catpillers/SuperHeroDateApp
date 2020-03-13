@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
       this.alertify.success('Logged in successfully');
       this.router.navigate(['/members']);
     }, error => {
-      this.alertify.error(error);
+      this.alertify.error('Wrong credentials');
     });
   }
 
